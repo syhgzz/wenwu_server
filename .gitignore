@@ -173,7 +173,9 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-# migrations
-*/migrations/* # 不能少*
-!*/migrations/__init__.py #必须写在后面 
+# migrations 
+# 必须有*
+*/migrations/* 
+#必须写在后面
+!*/migrations/__init__.py  
 media/
