@@ -1,32 +1,7 @@
+
+
+
 <!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>图片上传与处理</title>
-</head>
-<body>
-    <h1>图片上传与处理</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="image">
-        <button type="submit" name="upload">上传</button>
-        {% if uploaded_image_url %}
-            <button type="submit" name="process">处理</button>
-        {% endif %}
-    </form>
-    {% if uploaded_image_url %}
-        <h2>上传的图片</h2>
-        <img src="{{ uploaded_image_url }}" alt="上传的图片">
-    {% endif %}
-    {% if result_image_url %}
-        <h2>处理后的图片</h2>
-        <img src="{{ result_image_url }}" alt="处理后的图片">
-    {% endif %}
-</body>
-</html> -->
-
-
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -57,6 +32,74 @@
                     document.querySelector('button[onclick="processImage()"]').disabled = false;
                 };
                 reader.readAsArrayBuffer(file);
+            }
+        }
+
+        function processImage() {
+            if (uploadedImageBlob) {
+                const formData = new FormData();
+                formData.append('filename', uploadedImageBlob, 'uploaded_image.jpg');
+
+                const apiUrl = 'http://192.168.98.104:8000/process_file/';
+                fetch(apiUrl, {
+                    method: 'POST',
+                    body: formData
+                })
+               .then(response => response.blob())
+               .then(blob => {
+                    const img = document.createElement('img');
+                    const url = URL.createObjectURL(blob);
+                    img.src = url;
+                    document.getElementById('processedImage').appendChild(img);
+                })
+               .catch(error => console.error('处理图片时出错:', error));
+            }
+        }
+    </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片上传与处理</title>
+</head>
+<body>
+    <h1>图片上传与处理</h1>
+    <input type="file" id="imageInput">
+    <button onclick="uploadImage()">上传</button>
+    <button onclick="processImage()" disabled>处理</button>
+    <div id="processedImage"></div>
+    <div id="uploadedImage"></div>
+
+    <script>
+        let uploadedImageBlob = null;
+
+        function uploadImage() {
+            const input = document.getElementById('imageInput');
+            const file = input.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    document.getElementById('uploadedImage').appendChild(img);
+                    // 将文件转换为 Blob 对象，用于后续上传
+                    const binary = atob(e.target.result.split(',')[1]);
+                    const array = [];
+                    for (let i = 0; i < binary.length; i++) {
+                        array.push(binary.charCodeAt(i));
+                    }
+                    uploadedImageBlob = new Blob([new Uint8Array(array)], { type: file.type });
+                    document.querySelector('button[onclick="processImage()"]').disabled = false;
+                };
+                reader.onerror = function () {
+                    console.error('读取文件时出错:', reader.error);
+                };
+                reader.readAsDataURL(file);
             }
         }
 
