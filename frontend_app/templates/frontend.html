@@ -50,7 +50,7 @@
                 const formData = new FormData();
                 formData.append('filename', uploadedImageBlob, 'uploaded_image.jpg');
 
-                const apiUrl = 'http://192.168.98.104:8000/process_file/';
+                const apiUrl = 'http://10.61.84.84:38000/process_file/';
                 fetch(apiUrl, {
                     method: 'POST',
                     body: formData
