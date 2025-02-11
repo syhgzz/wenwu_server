@@ -50,12 +50,12 @@ def process_file(request):
         
         
         # 处理图片
-        img_process(upload_file_path,processed_file_path)
+        result = img_process(upload_file_path,processed_file_path)
 
 
         # 返回处理后的图片
         image_path = processed_file_path  
-        if os.path.exists(image_path):
+        if os.path.exists(image_path) and result == 0:
 
             # 以二进制模式打开图片文件
             with open(image_path, 'rb') as image_file:
@@ -97,3 +97,5 @@ def gen_paths(upload_file_name):
     processed_subpath = os.path.join('processed',upload_file_name)
     processed_file_path = os.path.join(settings.MEDIA_ROOT, processed_subpath)
     return upload_subpath,upload_file_path,processed_subpath,processed_file_path
+
+

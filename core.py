@@ -24,4 +24,5 @@ def img_process(input_file_path,output_file_path):
     # 调用函数
     result = lg.go_py(input_cstr, output_cstr)
 
-    print("处理图像完成")
+
+    return result

@@ -25,14 +25,18 @@ Including another URLconf
 #url.py
 from django.contrib import admin
 from django.urls import path
-from line_app import views
+import line_app.views
+import frontend_app.views
 from rest_framework.routers import DefaultRouter
 from django.conf.urls.static import static
 from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('movies/',views.movieViews.as_view()),
-    path('process_file/',views.process_file),
+    path('movies/',line_app.views.movieViews.as_view()),
+    path('process_file/',line_app.views.process_file,name='process_file'),
+
+    #前端路由, 给出一个前端例子
+    path('', frontend_app.views.frontend, name='frontend'),
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 ]
 
