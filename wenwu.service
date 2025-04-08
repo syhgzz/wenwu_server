@@ -1,0 +1,14 @@
+[Unit]
+Description=Wenwu Server Service
+After=network.target
+
+[Service]
+User=zhouzhuo
+Group=zhouzhuo
+WorkingDirectory=/home/zhouzhuo/repos/wenwu_server
+ExecStart=/bin/bash -c "source /home/zhouzhuo/miniconda3/etc/profile.d/conda.sh && conda activate wenwu && python manage.py runserver 0.0.0.0:8000"
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
