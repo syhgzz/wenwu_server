@@ -23,9 +23,11 @@ const apiUrl = 'http://10.61.84.84:38000/process_file/';
 
 ## 外调程序
 1. core.py 文件中的函数 img_process
-2. 调用C++ openCV程序可能会遇到报错
+2. 调用C++ openCV程序可能会遇到报错. 这是因为编译被调用程序的C++标准库版本高于conda自带的库. 
 ```
 OSError: /home/zhouzhuo/miniconda3/envs/wenwu/lib/python3.13/site-packages/../../libstdc++.so.6: version `GLIBCXX_3.4.30' not found (required by /lib/x86_64-linux-gnu/libopencv_core.so.406)
+
+执行  conda install -c conda-forge libstdcxx-ng 升级conda内部的c++标准库版本
 ```
 
 ## 制作自启动服务
