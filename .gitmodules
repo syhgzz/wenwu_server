@@ -1,0 +1,3 @@
+[submodule "LineGeneration"]
+	path = LineGeneration
+	url = git@github.com:syhgzz/LineGeneration.git
