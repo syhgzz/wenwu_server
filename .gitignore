@@ -179,3 +179,4 @@ cython_debug/
 #必须写在后面
 !*/migrations/__init__.py  
 media/
+testLineGenerator_linux
