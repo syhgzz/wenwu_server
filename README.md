@@ -1,11 +1,14 @@
 # 文物服务器服务
 ## 运行方式
 ```
-mkdir ./media/upload
-mkdir ./media/processed
+安装Django 
+pip install django
+cd ~/repos/wenwu 
+mkdir -p ./media/upload
+mkdir -p ./media/processed
 conda env create -n wenwu -f env.yml
 conda activate wenwu
-cd ~/repos/wenwu
+
 ./manage.py makemigration
 ./manage.py migrate
 ./manage.py createsuperuser
